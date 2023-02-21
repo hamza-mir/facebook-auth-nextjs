@@ -1,0 +1,48 @@
+import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
+import Head from 'next/head'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import Navbar from './components/Navbar'
+import Receive from './components/Receive'
+import Select from './components/Select'
+import Send from './components/Send'
+
+const Home: NextPage = () => {
+  const [pageState, setPageState] = useState(false)
+  const session = useSession();
+
+  // checking if user authenticated
+  // if yes then render compoenet 'Send'
+  useEffect(() => {
+    if (session.status === 'authenticated') setPageState(true)
+  }, [session])
+
+  useEffect(() => {
+    console.log("pageState: ", pageState)
+  }, [pageState])
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Navbar pageState={pageState} setPageState={setPageState} />
+
+
+      {/* <Select/> */}
+      {
+        pageState ?
+          <Send />
+          :
+          <Receive />
+      }
+
+      <button className="btn btn-primary mt-10">Button</button>
+
+    </div>
+  )
+}
+
+export default Home
