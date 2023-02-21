@@ -26,7 +26,7 @@ function Send() {
 
             <div>
                 { loading && <p>Loading...</p>}
-                { session && <p>User Name: <i>{session.user.name}</i></p>}
+                { session && <p>User Name: <i>{session.user?.name}</i></p>}
                 
             </div>
 
